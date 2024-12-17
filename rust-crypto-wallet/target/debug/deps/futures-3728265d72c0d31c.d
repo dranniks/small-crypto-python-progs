@@ -1,0 +1,7 @@
+/workspaces/Paradigms/rust-crypto-wallet/target/debug/deps/libfutures-3728265d72c0d31c.rmeta: /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/futures-0.3.31/src/lib.rs
+
+/workspaces/Paradigms/rust-crypto-wallet/target/debug/deps/libfutures-3728265d72c0d31c.rlib: /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/futures-0.3.31/src/lib.rs
+
+/workspaces/Paradigms/rust-crypto-wallet/target/debug/deps/futures-3728265d72c0d31c.d: /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/futures-0.3.31/src/lib.rs
+
+/home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/futures-0.3.31/src/lib.rs:

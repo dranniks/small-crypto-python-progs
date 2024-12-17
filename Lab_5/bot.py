@@ -1,42 +1,51 @@
 import telebot
-from telebot import types # для указание типов
+from telebot import types
 
+import requests
+from bs4 import BeautifulSoup
+import random
 
 bot = telebot.TeleBot("6583520781:AAHAI18SL0V_PyXu_rkHh9ld_YvFd-wiWoY")
 
 @bot.message_handler(commands=['start'])
 def start(message):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    btn1 = types.KeyboardButton("? Поздороваться")
-    btn2 = types.KeyboardButton("❓ Задать вопрос")
-    markup.add(btn1, btn2)
-    bot.send_message(message.chat.id, text="Привет, {0.first_name}! Я тестовый бот для твоей лабы по ПиКЯПу".format(message.from_user), reply_markup=markup)
+    btn1 = types.KeyboardButton("Хочу котика")
+    
+    markup.add(btn1)
+    bot.send_message(message.chat.id, text="Привет, {0.first_name}! Нажми на кнопку и я отправлю тебе котика!".format(message.from_user), reply_markup=markup)
     
 @bot.message_handler(content_types=['text'])
 def func(message):
-    if(message.text == "Поздороваться"):
-        bot.send_message(message.chat.id, text="Привеет..)")
-    elif(message.text == "❓ Задать вопрос"):
-        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-        btn1 = types.KeyboardButton("Как меня зовут?")
-        btn2 = types.KeyboardButton("Что я могу?")
-        back = types.KeyboardButton("Вернуться в главное меню")
-        markup.add(btn1, btn2, back)
-        bot.send_message(message.chat.id, text="Задай мне вопрос", reply_markup=markup)
-    
-    elif(message.text == "Как меня зовут?"):
-        bot.send_message(message.chat.id, "Евпатий 3000")
-    
-    elif message.text == "Что я могу?":
-        bot.send_message(message.chat.id, text="Ничего я не могу, я жалко ничтожество")
-    
-    elif (message.text == "Вернуться в главное меню"):
-        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-        button1 = types.KeyboardButton("? Поздороваться")
-        button2 = types.KeyboardButton("❓ Задать вопрос")
-        markup.add(button1, button2)
-        bot.send_message(message.chat.id, text="Вы вернулись в главное меню", reply_markup=markup)
-    else:
-        bot.send_message(message.chat.id, text="На такую комманду я не запрограммировал..")
+    if(message.text == "Хочу котика"):
+        msg = 'p'
+        while(msg[-1] == 'p'):
+            url = "https://ru.freepik.com/photos/котики"
+            response = requests.get(url)
+        
+            if response.status_code != 200:
+                print(f"Ошибка при запросе страницы: {response.status_code}")
+                return None
+            
+            soup = BeautifulSoup(response.text, 'html.parser')
+
+            images = soup.find_all('img')
+            
+            if not images:
+                print("Изображения не найдены.")
+                return None
+            
+            image_urls = [img['src'] for img in images if 'src' in img.attrs]
+            
+            absolute_image_urls = []
+            for img_url in image_urls:
+                if img_url.startswith('http'):
+                    absolute_image_urls.append(img_url)
+                else:
+                    absolute_image_urls.append(requests.compat.urljoin(url, img_url))
+
+            msg = random.choice(absolute_image_urls)
+        print(msg)
+        bot.send_photo(message.chat.id, msg)
 
 bot.polling(none_stop=True)
