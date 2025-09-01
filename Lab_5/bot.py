@@ -5,7 +5,7 @@ import requests
 from bs4 import BeautifulSoup
 import random
 
-bot = telebot.TeleBot("6583520781:AAHAI18SL0V_PyXu_rkHh9ld_YvFd-wiWoY")
+bot = telebot.TeleBot("KEY")
 
 @bot.message_handler(commands=['start'])
 def start(message):
