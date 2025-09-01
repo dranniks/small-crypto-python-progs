@@ -4,8 +4,8 @@ from mexc_api.websocket import SpotWebsocketStreamClient
 from mexc_api.common.enums import Side, OrderType, StreamInterval, Action
 from mexc_api.common.exceptions import MexcAPIError
 
-KEY = "mx0vglYTp5kZz5o6kS"
-SECRET = "d0ab0da7ef3d491f9610de75d015d48e"
+KEY = "key"
+SECRET = "key"
 
 spot = Spot(KEY, SECRET)
 
